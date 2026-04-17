@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Secure System Check</title>
+
+<style>
+body {
+  background: black;
+  color: #00ffcc;
+  font-family: monospace;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 15px;
+}
+
+.line {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.green { color: #00ffcc; }
+.red { color: #ff3b3b; }
+.yellow { color: #ffd700; }
+
+.progress-box {
+  border: 1px solid #00ffcc;
+  height: 10px;
+  margin-top: 10px;
+}
+
+.bar {
+  height: 100%;
+  width: 0%;
+  background: #00ffcc;
+}
+
+.center {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="terminal"></div>
+
+<script>
+let terminal = document.getElementById("terminal");
+
+let fakeIP = "192.168." + Math.floor(Math.random()*255) + "." + Math.floor(Math.random()*255);
+
+let steps = [
+  "Initializing secure connection...",
+  "Connecting to node server...",
+  "Fetching device info...",
+  "IP detected: " + fakeIP,
+  "Scanning storage...",
+  "Checking permissions...",
+  "Bypassing firewall...",
+  "Analyzing data packets...",
+  "Finalizing..."
+];
+
+let i = 0;
+let progress = 0;
+
+function addLine(text, cls="green") {
+  let div = document.createElement("div");
+  div.className = "line " + cls;
+  div.innerHTML = "> " + text;
+  terminal.appendChild(div);
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+function runSteps() {
+  if (i < steps.length) {
+    addLine(steps[i]);
+    i++;
+    setTimeout(runSteps, 700);
+  } else {
+    startProgress();
+  }
+}
+
+function startProgress() {
+  let box = document.createElement("div");
+  box.className = "progress-box";
+
+  let bar = document.createElement("div");
+  bar.className = "bar";
+  box.appendChild(bar);
+
+  terminal.appendChild(box);
+
+  function load() {
+    if (progress >= 100) {
+      finish();
+      return;
+    }
+    progress++;
+    bar.style.width = progress + "%";
+    setTimeout(load, 30);
+  }
+
+  load();
+}
+
+function finish() {
+  addLine("⚠ No threats found.", "yellow");
+  
+  let final = document.createElement("div");
+  final.className = "center";
+  final.innerHTML = "😄 Just kidding! You're safe.<br>~ PremPlay";
+  
+  terminal.appendChild(final);
+}
+
+runSteps();
+</script>
+
+</body>
+  </html>
